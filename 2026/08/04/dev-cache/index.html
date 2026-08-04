@@ -6,22 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://daynearby.github.io">
-  <title>KMP 网络请求缓存：在 Ktorfit 之上做读写 | nearby</title>
+  <title>KMP 网络请求缓存：使用MMKV实现缓存读写 | nearby</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="本文梳理 Kotlin Multiplatform 中网络请求缓存的读写方案：在 Ktor + Ktorfit 网络层之上，叠加”先读缓存、未命中再走网络、响应透明写回”的能力。代码与工程结构以 kmpDev 项目（com.ctrip.flight.mmkv + Ktor&#x2F;Ktorfit）为准。 配套文档：KMP 中 Ktor + Ktorfit 端到端集成（网络层初始化与本文化缓存的 Ktor">
 <meta property="og:type" content="article">
-<meta property="og:title" content="KMP 网络请求缓存：在 Ktorfit 之上做读写">
+<meta property="og:title" content="KMP 网络请求缓存：使用MMKV实现缓存读写">
 <meta property="og:url" content="https://daynearby.github.io/2026/08/04/dev-cache/index.html">
 <meta property="og:site_name" content="nearby">
 <meta property="og:description" content="本文梳理 Kotlin Multiplatform 中网络请求缓存的读写方案：在 Ktor + Ktorfit 网络层之上，叠加”先读缓存、未命中再走网络、响应透明写回”的能力。代码与工程结构以 kmpDev 项目（com.ctrip.flight.mmkv + Ktor&#x2F;Ktorfit）为准。 配套文档：KMP 中 Ktor + Ktorfit 端到端集成（网络层初始化与本文化缓存的 Ktor">
 <meta property="og:locale">
 <meta property="article:published_time" content="2026-08-04T14:50:00.000Z">
-<meta property="article:modified_time" content="2026-08-04T15:31:44.640Z">
+<meta property="article:modified_time" content="2026-08-04T15:41:41.122Z">
 <meta property="article:author" content="nearby">
 <meta property="article:tag" content="KMP">
+<meta property="article:tag" content="网络">
 <meta property="article:tag" content="缓存">
 <meta property="article:tag" content="Cache">
-<meta property="article:tag" content="网络">
 <meta property="article:tag" content="MMKV">
 <meta name="twitter:card" content="summary">
   
@@ -152,7 +152,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      KMP 网络请求缓存：在 Ktorfit 之上做读写
+      KMP 网络请求缓存：使用MMKV实现缓存读写
     </h1>
   
 
@@ -298,15 +298,15 @@
         		</li>
       		 
         		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">网络</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">缓存</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Cache</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">网络</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
@@ -481,22 +481,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">缓存</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Cache</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">网络</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">MMKV</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Ktor</a>
               </li>
              
@@ -505,7 +489,23 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">网络</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">缓存</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Cache</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">MMKV</a>
               </li>
             
             <div class="clearfix"></div>
